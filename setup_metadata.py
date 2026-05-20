@@ -1,0 +1,33 @@
+import os
+import requests
+from dotenv import load_dotenv
+
+load_dotenv()
+
+CLIENT_ID = os.getenv("CLIENT_ID")
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+
+url = f"https://discord.com/api/v10/applications/{CLIENT_ID}/role-connections/metadata"
+
+headers = {
+    "Authorization": f"Bot {BOT_TOKEN}",
+    "Content-Type": "application/json"
+}
+
+json_data = [
+    {
+        "type": 7,
+        "key": "teammitglied",
+        "name": "Teammitglied",
+        "description": "Diese Rolle besitzen alle Teammitglieder"
+    }
+]
+
+response = requests.put(
+    url,
+    headers=headers,
+    json=json_data
+)
+
+print(response.status_code)
+print(response.text)
