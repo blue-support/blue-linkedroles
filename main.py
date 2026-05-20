@@ -121,8 +121,10 @@ def callback(code: str):
     # ---------------------------
     # METADATA
     # ---------------------------
+
+
     metadata = {
-        "teammitglied": "1" if has_team_role else "0"
+    "teammitglied": has_team_role
     }
 
     # ---------------------------
