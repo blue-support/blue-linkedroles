@@ -80,7 +80,7 @@ def callback(code: str):
 
     if "access_token" not in token_data:
         return HTMLResponse(
-            f"<h1>❌ Fehler</h1><p>{token_data}</p>",
+            f"<h1>❌ Token Fehler</h1><p>{token_data}</p>",
             status_code=500
         )
 
@@ -121,10 +121,8 @@ def callback(code: str):
     # ---------------------------
     # METADATA
     # ---------------------------
-
-
     metadata = {
-    "teammitglied": has_team_role
+        "teammitglied": has_team_role
     }
 
     # ---------------------------
@@ -144,40 +142,42 @@ def callback(code: str):
     )
 
     # ---------------------------
-    # ERROR CHECK
+    # DEBUG PAGE
     # ---------------------------
-    if update_res.status_code not in [200, 201]:
-        return HTMLResponse(
-            f"<h1>❌ Fehler beim Verknüpfen</h1><p>{update_res.text}</p>",
-            status_code=500
-        )
-
-    # ---------------------------
-    # SUCCESS
-    # ---------------------------
-    return HTMLResponse("""
+    return HTMLResponse(f"""
     <html>
         <head>
-            <title>Blue Linked Roles</title>
+            <title>Blue Debug</title>
         </head>
 
         <body style="
             background-color:#0f1117;
             color:white;
             font-family:sans-serif;
-            text-align:center;
-            padding-top:100px;
+            padding:40px;
         ">
 
-            <h1>✅ Erfolgreich verknüpft!</h1>
+            <h1>🔍 DEBUG</h1>
 
-            <p>
-                Deine Linked Role wurde erfolgreich aktualisiert.
-            </p>
+            <hr>
 
-            <p>
-                Du kannst dieses Fenster jetzt schließen.
-            </p>
+            <p><b>USER:</b> {user["username"]}</p>
+
+            <p><b>USER ID:</b> {user_id}</p>
+
+            <p><b>TEAM ROLE ID:</b> {TEAM_ROLE_ID}</p>
+
+            <p><b>MEMBER STATUS:</b> {member_res.status_code}</p>
+
+            <p><b>HAS TEAM ROLE:</b> {has_team_role}</p>
+
+            <p><b>METADATA:</b> {metadata}</p>
+
+            <p><b>UPDATE STATUS:</b> {update_res.status_code}</p>
+
+            <p><b>UPDATE TEXT:</b></p>
+
+            <pre>{update_res.text}</pre>
 
         </body>
     </html>
