@@ -23,11 +23,7 @@ json_data = [
     }
 ]
 
-response = requests.put(
-    url,
-    headers=headers,
-    json=json_data
-)
+response = requests.put(url, headers=headers, json=json_data)
 
 print(response.status_code)
 print(response.text)
