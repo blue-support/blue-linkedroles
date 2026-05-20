@@ -7,6 +7,9 @@ load_dotenv()
 CLIENT_ID = os.getenv("CLIENT_ID")
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 
+print("CLIENT_ID:", CLIENT_ID)
+print("BOT_TOKEN:", BOT_TOKEN[:20] if BOT_TOKEN else "NONE")
+
 url = f"https://discord.com/api/v10/applications/{CLIENT_ID}/role-connections/metadata"
 
 headers = {
@@ -23,7 +26,11 @@ json_data = [
     }
 ]
 
-response = requests.put(url, headers=headers, json=json_data)
+response = requests.put(
+    url,
+    headers=headers,
+    json=json_data
+)
 
 print(response.status_code)
 print(response.text)
